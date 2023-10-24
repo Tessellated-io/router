@@ -19,7 +19,7 @@ It is particularly useful when you need to abstract configurations around RPC ad
 Simply run the following to update your `go.mod` file:
 
 ```
-go get github.com/tessellated-io/pickaxe
+go get github.com/tessellated-io/router
 ```
 
 ## Usage
