@@ -5,8 +5,9 @@ import "fmt"
 // Router defines a way to get addresses and API endpoints for blockchain nodes
 type Router interface {
 	GetHumanReadableName(chainName string) (string, error)
-
 	GetGrpcEndpoint(chainName string) (string, error)
+
+	AddChain(chain Chain) error
 }
 
 // Private implementing type
@@ -21,20 +22,18 @@ var _ Router = (*router)(nil)
 // NewRouter makes a new router with the given chains.
 func NewRouter(chains []Chain) (Router, error) {
 	chainMap := make(map[string]Chain)
-	for _, chain := range chains {
-		chainName := chain.GetChainName()
-
-		_, isSet := chainMap[chainName]
-		if isSet {
-			return nil, fmt.Errorf("duplicate chain name: %s", chainName)
-		}
-
-		chainMap[chainName] = chain
+	router := &router{
+		chains: chainMap,
 	}
 
-	return &router{
-		chains: chainMap,
-	}, nil
+	for _, chain := range chains {
+		err := router.AddChain(chain)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return router, nil
 }
 
 // Router Interface
@@ -55,4 +54,17 @@ func (r *router) GetGrpcEndpoint(chainName string) (string, error) {
 	}
 
 	return chain.GetGrpcEndpoint()
+}
+
+func (r *router) AddChain(chain Chain) error {
+	chainName := chain.GetChainName()
+
+	_, isSet := r.chains[chainName]
+	if isSet {
+		return fmt.Errorf("duplicate chain name: %s", chainName)
+	}
+
+	r.chains[chainName] = chain
+
+	return nil
 }
