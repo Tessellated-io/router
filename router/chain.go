@@ -20,7 +20,7 @@ type chain struct {
 var _ Chain = (*chain)(nil)
 
 // Create a new Chain
-func NewChain(chainName string, humanReadableName string, grpcEndpoint *string) (Chain, error) {
+func NewChain(chainName, humanReadableName string, grpcEndpoint *string) (Chain, error) {
 	return &chain{
 		chainName:         chainName,
 		humanReadableName: humanReadableName,
