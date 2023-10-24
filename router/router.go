@@ -27,7 +27,10 @@ func NewRouter(chains []Chain) (Router, error) {
 	}
 
 	for _, chain := range chains {
-		router.AddChain(chain)
+		err := router.AddChain(chain)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return router, nil
