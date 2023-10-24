@@ -19,14 +19,8 @@ ifeq (,$(VERSION))
 endif
 
 VERSION := $(VERSION)$(DIRTY)
-
 GIT_REVISION := $(shell git rev-parse HEAD)$(DIRTY)
-
 GO_SYSTEM_VERSION = $(shell go version | cut -c 14- | cut -d' ' -f1 | cut -d'.' -f1-2)
-
-ldflags= -X  github.com/tessellated-io/restake-go/cmd/restake-go/cmd.RestakeVersion=${VERSION} \
-	-X  github.com/tessellated-io/restake-go/cmd/restake-go/cmd.GitRevision=${GIT_REVISION} \
-	-X github.com/tessellated-io/restake-go/cmd/restake-go/cmd.GoVersion=${GO_SYSTEM_VERSION}
 
 BUILD_FLAGS := -tags "$(build_tags)" -ldflags '$(ldflags)'
 
@@ -39,9 +33,6 @@ BUILD_TARGETS := build
 build:
 	mkdir -p $(BUILDDIR)/
 	go build -mod=readonly -ldflags '$(ldflags)' -trimpath -o $(BUILDDIR) ./...;
-
-install: go.sum
-	go install $(BUILD_FLAGS) ./cmd/restake-go
 
 clean:
 	rm -rf $(BUILDDIR)/*
