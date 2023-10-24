@@ -28,5 +28,4 @@ go get github.com/tessellated-io/pickaxe
 
 Several errors are also exported for convenience from `errors.go`.
 
-The most useful functionality for `Router` is to add a `replace` for a private go Module in your `go.mod`, in order to route to your own infrastructure. 
-
+The most useful functionality for `Router` is to add a `replace` for a private go Module in your `go.mod`, in order to route to your own infrastructure. By design, `Router` is statically configured, but in dynamic systems, a replacement module could dynamically refresh routes and supported chains.
