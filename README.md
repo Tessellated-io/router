@@ -1,14 +1,16 @@
 <div align="center">
-<h1>Router</h1>
+<p style="font-size:24px; font-weight: bold;">Router</p>
 <p>
       <img alt="Tessellated Logo" src="media/tessellated-logo.png" />
-</p>
 <small>Software by <a href="https://tessellated.io" target="_blank"> Tessellated // tessellated.io</a></small>
+</p>
 </div>
 
 ---
 
-`Router`` is an abstraction around chains that allows users to look up and use chains across Tessellated's software. 
+## Introduction
+
+`Router` is an abstraction around chains that allows users to look up and use chains across Tessellated's software. 
 
 It is particularly useful when you need to abstract configurations around RPC addresses, for instance, to coordinate signing processes, delegation queries or manually configure RPCs.
 
