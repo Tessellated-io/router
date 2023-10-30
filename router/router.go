@@ -4,8 +4,8 @@ import "fmt"
 
 // Router defines a way to get addresses and API endpoints for blockchain nodes
 type Router interface {
-	GetHumanReadableName(chainName string) (string, error)
-	GetGrpcEndpoint(chainName string) (string, error)
+	HumanReadableName(chainName string) (string, error)
+	GrpcEndpoint(chainName string) (string, error)
 
 	AddChain(chain Chain) error
 }
@@ -38,26 +38,35 @@ func NewRouter(chains []Chain) (Router, error) {
 
 // Router Interface
 
-func (r *router) GetHumanReadableName(chainName string) (string, error) {
-	chain := r.chains[chainName]
+func (r *router) HumanReadableName(chainID string) (string, error) {
+	chain := r.chains[chainID]
 	if chain == nil {
-		return "", ErrNoChainWithName
+		return "", ErrNoChainWithID
 	}
 
-	return chain.GetHumanReadableName(), nil
+	return chain.HumanReadableName(), nil
 }
 
-func (r *router) GetGrpcEndpoint(chainName string) (string, error) {
-	chain := r.chains[chainName]
+func (r *router) Bech32Prefix(chainID string) (string, error) {
+	chain := r.chains[chainID]
 	if chain == nil {
-		return "", ErrNoChainWithName
+		return "", ErrNoChainWithID
 	}
 
-	return chain.GetGrpcEndpoint()
+	return chain.Bech32Prefix(), nil
+}
+
+func (r *router) GrpcEndpoint(chainID string) (string, error) {
+	chain := r.chains[chainID]
+	if chain == nil {
+		return "", ErrNoChainWithID
+	}
+
+	return chain.GrpcEndpoint()
 }
 
 func (r *router) AddChain(chain Chain) error {
-	chainName := chain.GetChainName()
+	chainName := chain.ChainID()
 
 	_, isSet := r.chains[chainName]
 	if isSet {
