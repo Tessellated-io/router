@@ -38,19 +38,28 @@ func NewRouter(chains []Chain) (Router, error) {
 
 // Router Interface
 
-func (r *router) HumanReadableName(chainName string) (string, error) {
-	chain := r.chains[chainName]
+func (r *router) HumanReadableName(chainID string) (string, error) {
+	chain := r.chains[chainID]
 	if chain == nil {
-		return "", ErrNoChainWithName
+		return "", ErrNoChainWithID
 	}
 
 	return chain.HumanReadableName(), nil
 }
 
-func (r *router) GrpcEndpoint(chainName string) (string, error) {
-	chain := r.chains[chainName]
+func (r *router) Bech32Prefix(chainID string) (string, error) {
+	chain := r.chains[chainID]
 	if chain == nil {
-		return "", ErrNoChainWithName
+		return "", ErrNoChainWithID
+	}
+
+	return chain.Bech32Prefix(), nil
+}
+
+func (r *router) GrpcEndpoint(chainID string) (string, error) {
+	chain := r.chains[chainID]
+	if chain == nil {
+		return "", ErrNoChainWithID
 	}
 
 	return chain.GrpcEndpoint()
