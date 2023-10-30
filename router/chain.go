@@ -2,15 +2,15 @@ package router
 
 // Chain defines an abstraction around a Chain that Validator tooling or other blockchain applications may use.
 type Chain interface {
-	GetHumanReadableName() string
-	GetChainName() string
+	HumanReadableName() string
+	ChainID() string
 
-	GetGrpcEndpoint() (string, error)
+	GrpcEndpoint() (string, error)
 }
 
 // private implementation
 type chain struct {
-	chainName         string
+	chainID           string
 	humanReadableName string
 
 	grpcEndpoint *string
@@ -20,9 +20,9 @@ type chain struct {
 var _ Chain = (*chain)(nil)
 
 // Create a new Chain
-func NewChain(chainName, humanReadableName string, grpcEndpoint *string) (Chain, error) {
+func NewChain(chainID, humanReadableName string, grpcEndpoint *string) (Chain, error) {
 	return &chain{
-		chainName:         chainName,
+		chainID:           chainID,
 		humanReadableName: humanReadableName,
 
 		grpcEndpoint: grpcEndpoint,
@@ -31,10 +31,10 @@ func NewChain(chainName, humanReadableName string, grpcEndpoint *string) (Chain,
 
 // Chain Interface
 
-func (c *chain) GetHumanReadableName() string { return c.chainName }
-func (c *chain) GetChainName() string         { return c.humanReadableName }
+func (c *chain) HumanReadableName() string { return c.humanReadableName }
+func (c *chain) ChainID() string           { return c.chainID }
 
-func (c *chain) GetGrpcEndpoint() (string, error) {
+func (c *chain) GrpcEndpoint() (string, error) {
 	if c.grpcEndpoint == nil {
 		return "", ErrNoEndpointValueProvided
 	} else {

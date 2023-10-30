@@ -4,8 +4,8 @@ import "fmt"
 
 // Router defines a way to get addresses and API endpoints for blockchain nodes
 type Router interface {
-	GetHumanReadableName(chainName string) (string, error)
-	GetGrpcEndpoint(chainName string) (string, error)
+	HumanReadableName(chainName string) (string, error)
+	GrpcEndpoint(chainName string) (string, error)
 
 	AddChain(chain Chain) error
 }
@@ -38,26 +38,26 @@ func NewRouter(chains []Chain) (Router, error) {
 
 // Router Interface
 
-func (r *router) GetHumanReadableName(chainName string) (string, error) {
+func (r *router) HumanReadableName(chainName string) (string, error) {
 	chain := r.chains[chainName]
 	if chain == nil {
 		return "", ErrNoChainWithName
 	}
 
-	return chain.GetHumanReadableName(), nil
+	return chain.HumanReadableName(), nil
 }
 
-func (r *router) GetGrpcEndpoint(chainName string) (string, error) {
+func (r *router) GrpcEndpoint(chainName string) (string, error) {
 	chain := r.chains[chainName]
 	if chain == nil {
 		return "", ErrNoChainWithName
 	}
 
-	return chain.GetGrpcEndpoint()
+	return chain.GrpcEndpoint()
 }
 
 func (r *router) AddChain(chain Chain) error {
-	chainName := chain.GetChainName()
+	chainName := chain.ChainID()
 
 	_, isSet := r.chains[chainName]
 	if isSet {
