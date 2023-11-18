@@ -30,4 +30,14 @@ go get github.com/tessellated-io/router
 
 Several errors are also exported for convenience from `errors.go`.
 
-The most useful functionality for `Router` is to add a `replace` for a private go Module in your `go.mod`, in order to route to your own infrastructure. By design, `Router` is statically configured, but in dynamic systems, a replacement module could dynamically refresh routes and supported chains.
+We provide two default routing strategies out of the box: 
+- `static`: Allows configuration of a router with preconfigured chains
+- `file`: Allows configuration of a router with routes in a file.
+  A file router assumes a config such as:
+  
+  ```yaml
+  - chain-id: my-chain
+    grpc: tcp://1.2.3.4:9090
+  ```
+
+The most useful functionality for `Router` is to add a `replace` for a private go Module in your `go.mod`, in order to route to your own infrastructure. 
