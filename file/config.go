@@ -14,7 +14,7 @@ type Config struct {
 }
 
 type NetworkConfig struct {
-	ChainID      string `yaml:"chain-id"`
+	ChainID      string `yaml:"chain_id"`
 	GrpcEndpoint string `yaml:"grpc"`
 }
 
