@@ -35,13 +35,13 @@ func parseConfig(filename string) (*Config, error) {
 }
 
 // Write an example config file.
-func InitializeConfigFile(filename string, configurationDirectory string, logger *log.Logger) error {
+func InitializeConfigFile(filename, configurationDirectory string, logger *log.Logger) error {
 	networks := []NetworkConfig{
-		NetworkConfig{
+		{
 			ChainID:      "cosmoshub-4",
 			GrpcEndpoint: "tcp://cosmos.rpc.directory",
 		},
-		NetworkConfig{
+		{
 			ChainID:      "osmosis-1",
 			GrpcEndpoint: "tcp://osmosis.rpc.directory",
 		},
@@ -52,11 +52,14 @@ func InitializeConfigFile(filename string, configurationDirectory string, logger
 	}
 
 	// Create folder if needed
-	config.CreateDirectoryIfNeeded(configurationDirectory, logger)
+	err := config.CreateDirectoryIfNeeded(configurationDirectory, logger)
+	if err != nil {
+		return err
+	}
 
 	routerConfigFile := fmt.Sprintf("%s/%s", configurationDirectory, filename)
 	header := "This is a file to route chain IDs to RPC endpoints\n"
-	err := config.WriteYamlWithComments(routerConfig, header, routerConfigFile, logger)
+	err = config.WriteYamlWithComments(routerConfig, header, routerConfigFile, logger)
 	if err != nil {
 		return err
 	}

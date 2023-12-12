@@ -17,7 +17,7 @@ func NewRouter() (BaseRouter, error) {
 	}, nil
 }
 
-// Router Interace
+// Router Interacted
 
 func (br *BaseRouter) GrpcEndpoint(chainID string) (string, error) {
 	chain := br.chains[chainID]
