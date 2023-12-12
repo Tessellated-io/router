@@ -20,7 +20,7 @@ type NetworkConfig struct {
 
 // Parse a file into a UserConfig
 func parseConfig(filename string) (*Config, error) {
-	data, err := os.ReadFile(filename)
+	data, err := os.ReadFile(config.ExpandHomeDir(filename))
 	if err != nil {
 		return nil, err
 	}
