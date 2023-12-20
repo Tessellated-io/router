@@ -4,5 +4,5 @@ package types
 type Router interface {
 	Refresh() error
 
-	GrpcEndpoint(chainName string) (string, error)
+	GrpcEndpoint(ChainID string) (string, error)
 }
