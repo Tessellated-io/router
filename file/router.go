@@ -18,11 +18,18 @@ var _ types.Router = (*fileRouter)(nil)
 
 // NewRouter creates a new file router.
 func NewRouter(configFile string) (types.Router, error) {
+	baseRouter, err := base.NewRouter()
+	if err != nil {
+		return nil, err
+	}
+
 	fileRouter := &fileRouter{
+		BaseRouter: baseRouter,
+
 		configFile: configFile,
 	}
 
-	err := fileRouter.loadConfigFile()
+	err = fileRouter.loadConfigFile()
 	if err != nil {
 		return nil, err
 	}
