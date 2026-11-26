@@ -1,9 +1,9 @@
 module github.com/tessellated-io/router
 
-go 1.20
+go 1.21.0
 
 require (
-	github.com/tessellated-io/pickaxe v1.1.0
+	github.com/tessellated-io/pickaxe v1.2.4
 	gopkg.in/yaml.v2 v2.4.0
 )
 
